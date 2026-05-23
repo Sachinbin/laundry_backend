@@ -1,46 +1,62 @@
-const { default: mongoose } = require("mongoose");
+const mongoose = require('mongoose');
 
-let orderSchema = new mongoose.Schema(
-    {
-        customerName: {
-            type: String,
-            trim: true
-        },
-        clothes: [
-            {
-                name: {
-                    type:String,
-                    enum: ['saree', "T-shirt", 'other'],
-                    default: "other"
+const orderSchema = new mongoose.Schema({
+  customer: {
+    type: String,
+    required: true,
+    trim: true
+  },
+  phone: {
+    type: String,
+    required: true
+  },
+  service: {
+    type: String,
+    required: true,
+    enum: ['Wash and Fold', 'Dry Clean', 'Iron', 'Wash and Iron']
+  },
+  quantity: {
+    type: Number,
+    required: true,
+    min: 1
+  },
+  amount: {
+    type: Number,
+    required: true,
+    min: 0
+  },
+  due: {
+    type: Date, 
+    required: true
+  },
+  status: {
+    type: String,
+    enum: ['Pending', 'In Progress', 'Completed'],
+    default: 'Pending'
+  },
 
-                },
-                amountPerCloth: {
-                    type: Number,
-                    required: true
-                },
-                quantity: {
-                    type: Number,
-                    required: true
-                }
-            }
-        ],
-        totalExpense: {
-            type: String,
-            default: 0
-        }
-    }, {
-    timestamps: true
-}
-)
+  
+  tower: {
+    type: String,
+    required: true
+  },
+  flat: {
+    type: String,
+    required: true
+  },
+  totalAmount:{
+    type:Number,
+    default:0,
+  }
 
-orderSchema.pre("save",function (){
-    let total = 0;
-    this.clothes.forEach((item)=>{
-        return total +=item.amountPerCloth*item.quantity
-    })
+}, {
+  timestamps: true
+});
 
-    this.totalExpense = total
+orderSchema.pre("save",function(){
+    return this.totalAmount = this.amount*this.items;
 })
 
-let OrderModel = mongoose.model('oredrs', orderSchema);
+
+let OrderModel = mongoose.model('Order', orderSchema);;
 module.exports = OrderModel;
