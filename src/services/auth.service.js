@@ -32,7 +32,7 @@ let loginService = async (data) => {
         throw new ApiError(404, "user not found")
     }
 
-    let isMatch = await bcrypt.compare(password,user.password)
+    let isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) {
         throw new ApiError(401, "Invalid credentials")
     }
@@ -50,16 +50,30 @@ let meService = async (refresh) => {
         process.env.REFRESH_TOKEN_SECRET
     )
 
-    
-    
+
+
     let newAccessToken = accessToken(decode.id)
 
     return newAccessToken
 
 }
 
+let adminLoginService = async (password) => {
+    if (!password) {
+        throw new ApiError(400, "Please fill the field")
+    }
+
+
+    if (password !== process.env.ADMIN_PASSWORD) {
+        throw new ApiError(401, "Invalid credentials");
+    }
+
+    return true
+}
+
 module.exports = {
     registerService,
     loginService,
-    meService
+    meService,
+     adminLoginService,
 }
