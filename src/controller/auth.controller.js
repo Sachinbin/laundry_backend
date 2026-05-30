@@ -67,6 +67,10 @@ let adminLoginController = asyncHandler(async (req, res) => {
     let response = await adminLoginService(password)
 
     return res.status(200).json(new ApiResponse("Login succesful",response))
+    let access = await accessToken()
+
+
+    res.cookie("accessToken", access);
 })
 
 module.exports = {

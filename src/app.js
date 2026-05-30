@@ -8,8 +8,8 @@ const cors = require('cors')
 
 app.use(cookieParser())
 app.use(express.json())
-app,use(cors({
-    origin:'https://ganesh-power-laundry-frontend.vercel.app/'
+app.use(cors({
+    origin:'*'
 }))
 
 app.use('/api/order',orderRouter);
