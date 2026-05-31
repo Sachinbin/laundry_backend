@@ -17,7 +17,6 @@ let adminLoginService = async (password) => {
     }
 
     let token = await accessToken()
-    
     return token
 }
 

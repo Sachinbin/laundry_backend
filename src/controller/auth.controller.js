@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt")
 
 let adminLoginController = asyncHandler(async (req, res) => {
     let { password } = req.body;
+    
     let response = await adminLoginService(password)
 
     res.cookie('token', response)
