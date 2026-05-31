@@ -11,13 +11,9 @@ let adminLoginController = asyncHandler(async (req, res) => {
     let { password } = req.body;
     let response = await adminLoginService(password)
 
-    res.cookie('token', response, {
-        httpOnly: true,
-        secure: false,
-        sameSite:"strict"
-    })
+    res.cookie('token', response)
 
-    return res.status(200).json(new ApiResponse("Login succesful", response))
+    return res.status(200).json(new ApiResponse("Login succesfuly", response))
 
 })
 
