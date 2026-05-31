@@ -7,76 +7,21 @@ const asyncHandler = require("../utils/asyncHandler");
 const bcrypt = require("bcrypt")
 
 
-// let registerController = asyncHandler(async (req, res) => {
-//     let data = req.body;
-//     let response = await registerService(data)
-
-//     let access = await accessToken(response._id)
-//     let refresh = await refreshToken(response._id)
-//     response.refresh_Token = refresh;
-//     await response.save()
-
-//     res.cookie("accessToken", access)
-//     res.cookie("refreshToken", refresh)
-
-//     return res.status(201).json(new ApiResponse("user created successfuly", response))
-// })
-
-// let loginController = asyncHandler(async (req, res) => {
-//     let data = req.body;
-//     let response = await loginService(data)
-
-//     let access = await accessToken(response._id)
-//     let refresh = await refreshToken(response._id)
-
-//     response.refresh_Token = refresh;
-//     await response.save()
-
-//     res.cookie("accessToken", access, {
-//         httpOnly: true,
-//         secure: true
-//     });
-
-//     res.cookie("refreshToken", refresh, {
-//         httpOnly: true,
-//         secure: true
-//     });
-
-//     return res.status(200).json(new ApiResponse("user logged in successfuly", response))
-// })
-
-// let meController = asyncHandler(async (req, res) => {
-//     let refresh = req.cookies.refreshToken
-//     let newAccessToken = await meService(refresh)
-
-
-//     res.cookie("accessToken", newAccessToken, {
-//         httpOnly: true,
-//         secure: true,
-//     })
-
-//     return res
-//         .status(200)
-//         .json(new ApiResponse("Access token refreshed", {
-//             accessToken: newAccessToken
-//         }));
-// })
-
 let adminLoginController = asyncHandler(async (req, res) => {
     let { password } = req.body;
     let response = await adminLoginService(password)
 
-    return res.status(200).json(new ApiResponse("Login succesful",response))
-    let access = await accessToken()
+    res.cookie('token', response, {
+        httpOnly: true,
+        secure: false,
+        sameSite:"strict"
+    })
 
+    return res.status(200).json(new ApiResponse("Login succesful", response))
 
-    res.cookie("accessToken", access);
 })
 
 module.exports = {
-    // registerController,
-    // loginController,
-    // meController,
     adminLoginController
 
 }
