@@ -13,13 +13,12 @@ let createOrderService = async (data) => {
         flat
     } = data;
 
-    if (!customer || !phone || !amount || !quantity) {
+    if (!customer || !amount || !quantity) {
         throw new ApiError(400, "all fields are required");
     }
 
     let newOrder = await OrderModel.create({
         customer,
-        phone,
         service,
         quantity,
         amount,
@@ -27,7 +26,7 @@ let createOrderService = async (data) => {
         tower,
         flat
     })
-    console.log('created');
+    // console.log('created');
 
 
     return newOrder

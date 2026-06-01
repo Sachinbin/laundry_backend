@@ -18,9 +18,7 @@ let authSchema = new mongoose.Schema({
         minLength:6,
         required:true,
     },
-    refresh_Token:{
-        type:String,
-    }
+   
 },
 {
     timestamps:true

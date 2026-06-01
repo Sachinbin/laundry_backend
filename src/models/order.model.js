@@ -8,12 +8,11 @@ const orderSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    required: true
   },
   service: {
     type: String,
     required: true,
-    enum: ['Wash and Fold', 'Dry Clean', 'Iron', 'Wash and Iron']
+    enum: ['Normal Iron', 'Steam Iron', 'Dry Cleaning']
   },
   quantity: {
     type: Number,
