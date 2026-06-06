@@ -1,3 +1,6 @@
+const dns = require("node:dns/promises");
+dns.setServers(["1.1.1.1", "1.0.0.1"]);
+
 const mongoose = require("mongoose")
 
 const connectDB = async () => {
@@ -6,6 +9,7 @@ const connectDB = async () => {
         console.log('Database connected successfuly')
     } catch (error) {
         console.log('Database Connection failed')
+        console.log(error.message)
     }
 }
 
